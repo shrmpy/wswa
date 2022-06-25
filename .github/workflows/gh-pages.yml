@@ -1,0 +1,50 @@
+name: Publish
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  archive_job:
+    name: Archive 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '>=1.18.0'
+    - name: WASM target
+      shell: bash
+      run: GOOS=js GOARCH=wasm go build -v -ldflags "-w -s" -o dist/web/test.wasm
+    - name: Copy Js script
+      shell: bash
+      run: cp $(go env GOROOT)/misc/wasm/wasm_exec.js dist/web/.
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ebiten-web
+        retention-days: 1
+        path: |
+          dist/web/
+          LICENSE
+
+  publish_job:
+    needs: archive_job
+    if: github.ref == 'refs/heads/main'
+    name: Pub to GH pages
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: ebiten-web
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4.3.3
+      with:
+        branch: gh-pages
+        folder: dist/web
+
