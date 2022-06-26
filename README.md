@@ -1,6 +1,12 @@
-# ebiten-game-template
+# ebiten-websocket-wasm
 
-A basic skeleton for a 2D game using the [Ebiten](https://ebiten.org/) library.
+Take [ebiten-game-template](https://github.com/sinisterstuf/ebiten-game-template)
+ and add websockets. Will it work?
+
+Following the goita project, it reveals more clearly how there are two layers
+ one for the service, and a second for the webview. The service can utilize packages
+ written for websockets (i.e., `gorilla/websocket`). The webview where the WASM runtime
+ lives, must rely on `syscall/js` to "talk" to the backend.
 
 -----✂️-----
 
@@ -37,8 +43,21 @@ To run the tests, run: `go test ./...` but there are no tests yet.
 
 The project has a very simple, flat structure, the first place to start looking is the main.go file.
 
-## websocket 
-The ws example is
+## Credits
+
+Websocket example is
  by [Sergey Kamardin](https://github.com/gobwas/ws)
  ([LICENSE](https://github.com/gobwas/ws/blob/master/LICENSE))
+
+Websocket + WASM + webview
+ by [Marc](https://github.com/Markcial/goita)
+ ([LICENSE](https://github.com/Markcial/goita/blob/main/LICENSE))
+
+Github workflow
+ by [Siôn le Roux](https://github.com/sinisterstuf/ebiten-game-template)
+ ([LICENSE](https://github.com/sinisterstuf/ebiten-game-template/blob/main/LICENSE))
+
+Ebitengine
+ by [Hajime Hoshi](https://github.com/hajimehoshi/ebiten/)
+ ([LICENSE](https://github.com/hajimehoshi/ebiten/blob/main/LICENSE))
 
