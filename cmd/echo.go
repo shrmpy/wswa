@@ -21,7 +21,8 @@ func main() {
 				msg, op, err := wsutil.ReadClientData(conn)
 				if err != nil {
 					// handle error
-					panic(err)
+					print("\nTODO err mgt, ", err.Error())
+					return
 				}
 				err = wsutil.WriteServerMessage(conn, op, msg)
 				if err != nil {
